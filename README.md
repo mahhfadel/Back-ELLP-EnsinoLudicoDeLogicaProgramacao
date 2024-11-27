@@ -1,6 +1,8 @@
 # ELLP - Ensino Lúdico De Logica e Programação
 Projeto desenvolvido na disciplina de Oficina de Integração 2
 
+Prototipo: https://www.figma.com/proto/G5hpgViLK0SEaRbGaCB1Lb/ELLP?node-id=1-2&node-type=frame&t=2NCRy878Dl3cd4Uo-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2
+
 ## Equipe:
 - Erick Elsas de Freitas, 2347938
 - Maria Clara Fadel, 2350637
