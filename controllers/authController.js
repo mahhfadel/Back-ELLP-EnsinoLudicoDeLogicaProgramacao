@@ -18,46 +18,30 @@ exports.login = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  try {
-    const teacher = req.body;
+    const { name, email, phone, birthdate, password, address } = req.body;
 
-    if (!teacher) {
+    if (!name || !email || !phone || !birthdate || !address || !password) {
       return res
         .status(400)
-        .json({ message: "Não existe user enviado no body. " });
+        .json({ message: "Não existe professor enviado no body. " });
     }
 
-    const teacherWithId = await teacherService.createTeacher(teacher);
-
-    if (!teacherWithId) {
-      return res
-        .status(400)
-        .json({ message: "Não foi possível criar o usuário." });
+    try {
+      const newTeacher = await teacherService.createTeacher({ name, email, phone, birthdate, password, address });
+      
+      if (!newTeacher) {
+        return res.status(400).json({ message: 'Não foi possível criar o usuário.' });
+      }
+  
+      const token = await authService.login(email, password); // Simulando um login após criação
+      if (!token) {
+        return res.status(401).json({ message: 'Credenciais inválidas.' });
+      }
+  
+      return res.status(201).json({ teacher: newTeacher, token });
+  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Erro ao criar professor.' });
     }
-
-    const { email, password } = req.body;
-    const token = await authService.login(email, password);
-
-    if (token === null) {
-      return res.status(401).json({ message: "Credenciais inválidas." });
-    }
-
-    return res
-      .status(201)
-      .json({
-        teacher: {
-          id: teacherWithId.id,
-          email: teacherWithId.email,
-          phone: teacherWithId.phone,
-          name: teacherWithId.name,
-          address: teacherWithId.address,
-          birthdate: teacherWithId.birthdate,
-        },
-        token,
-      });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Erro ao criar professor.", error: error.message });
-  }
 };
