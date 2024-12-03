@@ -3,6 +3,14 @@ const app = express();
 const { sequelize } = require('./models');
 const { authRoutes } = require('./routes');
 
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'https://ellp-ten.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Adicione os métodos que seu servidor suporta
+}));
+
+
 sequelize.sync({ alter: true })
   .then(() => {
     console.log('Banco de dados sincronizado!');
