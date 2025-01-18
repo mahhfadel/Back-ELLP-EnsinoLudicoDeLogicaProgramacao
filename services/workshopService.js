@@ -1,5 +1,5 @@
-const Workshop = require('../models');
-const StudentsWorkshops = require('../models');
+const { Workshop } = require('../models');
+const { StudentsWorkshops } = require('../models');
 
 exports.getWorkshops = async () => {
     try{

@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+
+const { authenticateToken } = require('../middlewares/auth');
 const workshopController = require('../controllers/workshopController');
 
-router.get('/', workshopController.getWorkshops);
+router.get('/workshop/', authenticateToken, workshopController.getWorkshops);
 
-router.post('/', workshopController.createWorkshop);
+router.post('/workshop/', authenticateToken, workshopController.createWorkshop);
 
-router.post('/:id/students', workshopController.addStudentsToWorkshop);
+router.post('/workshop/:id/students', authenticateToken, workshopController.addStudentsToWorkshop);
 
 module.exports = router;

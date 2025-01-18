@@ -1,8 +1,8 @@
-const Student = require('../models');
+const { Student } = require('../models');
 
 exports.getStudents = async () => {
     try{
-        const students = await Student.findAll({});
+        const students = await Student.findAll();
         return students;
     } catch(error){
         throw new Error(error.message);
