@@ -1,5 +1,10 @@
 const authController = require('./authController')
+const workshopController = require('./workshopController')
+const studentController = require('./studentController')
+
 
 module.exports = {
-    authController
+    authController,
+    workshopController,
+    studentController
 }
