@@ -1,5 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
-    const StudentsWorkshops = sequelize.define('students_workshops', {
+  const StudentsWorkshops = sequelize.define(
+    'StudentsWorkshops',
+    {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -12,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
           model: 'students',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       workshopID: {
         type: DataTypes.INTEGER,
@@ -20,13 +24,19 @@ module.exports = (sequelize, DataTypes) => {
           model: 'workshops',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       isCompleted: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-    }, {
+    },
+    {
       timestamps: false,
-    });
-    return StudentsWorkshops;
-  };  
+      tableName: 'students_workshops',
+    }
+  );
+
+  return StudentsWorkshops;
+};

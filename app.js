@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
 const { sequelize } = require('./models');
-const { authRoutes } = require('./routes');
+const { authRoutes, studentRoutes, workshopRoutes } = require('./routes');
 
 const cors = require('cors');
 
 app.use(cors({
     origin: 'https://ellp-ten.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Adicione os métodos que seu servidor suporta
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
 
@@ -21,6 +21,8 @@ sequelize.sync({ alter: true })
 
 app.use(express.json());
 app.use(authRoutes);
+app.use(studentRoutes);
+app.use(workshopRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);

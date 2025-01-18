@@ -4,7 +4,6 @@ exports.createTeacher = async (teacher) => {
     try {
         const newTeacher = await Teacher.create(teacher);
 
-        // Remover o campo 'password' antes de retornar
         const teacherWithoutPassword = newTeacher.toJSON();
         delete teacherWithoutPassword.password;
 
