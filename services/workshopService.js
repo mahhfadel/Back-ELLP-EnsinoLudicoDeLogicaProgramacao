@@ -56,3 +56,23 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
     }
 };
   
+exports.markStudentAsCompleted = async (workshopId, studentId) => {
+  try {
+      const studentWorkshop = await StudentsWorkshops.findOne({
+          where: {
+              workshopID: workshopId,
+              studentID: studentId
+          }
+      });
+
+      if (!studentWorkshop) {
+          throw new Error('Student not found in this workshop');
+      }
+      studentWorkshop.isCompleted = true;
+      await studentWorkshop.save();
+
+      return studentWorkshop;
+  } catch (error) {
+      throw new Error(`Error marking student as completed: ${error.message}`);
+  }
+};

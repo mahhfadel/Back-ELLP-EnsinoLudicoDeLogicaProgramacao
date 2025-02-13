@@ -10,6 +10,8 @@ router.post('/workshop/', authenticateToken, workshopController.createWorkshop);
 
 router.post('/workshop/:id/students', authenticateToken, workshopController.addStudentsToWorkshop);
 
-router.get('/workshop/:id/students', workshopController.getStudentsForWorkshop);
+router.get('/workshop/:id/students', authenticateToken, workshopController.getStudentsForWorkshop);
+
+router.put('/workshop/:workshopId/students/:studentId/completed', authenticateToken, workshopController.markStudentAsCompleted);
 
 module.exports = router;

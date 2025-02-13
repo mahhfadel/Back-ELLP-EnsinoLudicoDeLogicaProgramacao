@@ -72,7 +72,7 @@ exports.addStudentsToWorkshop = async (req, res) => {
   
 
   exports.getStudentsForWorkshop = async (req, res) => {
-    const { id } = req.params; // Recebe o ID do workshop da URL
+    const { id } = req.params;
 
     try {
         const students = await workshopService.getStudentsByWorkshop(id);
@@ -85,4 +85,25 @@ exports.addStudentsToWorkshop = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: error.message });  // Retorna erro em caso de falha
     }
+};
+
+exports.markStudentAsCompleted = async (req, res) => {
+  const { workshopId, studentId } = req.params; 
+  try {
+      // Encontra a relação entre o aluno e o workshop
+      const studentWorkshop = await StudentsWorkshops.findOne({
+          where: { workshopID: workshopId, studentID: studentId }
+      });
+
+      if (!studentWorkshop) {
+          return res.status(404).json({ message: "Student not enrolled in this workshop." });
+      }
+
+      studentWorkshop.isCompleted = true;  
+      await studentWorkshop.save(); 
+
+      return res.status(200).json({ message: "Student marked as completed." });
+  } catch (error) {
+      return res.status(500).json({ message: `Error marking student as completed: ${error.message}` });
+  }
 };
