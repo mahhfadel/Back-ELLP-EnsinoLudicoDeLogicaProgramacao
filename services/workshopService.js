@@ -40,7 +40,7 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
         include: [
           {
             model: Student,
-            through: { attributes: ['id', 'name', 'email', 'phone', 'isCompleted'] },
+            through: { attributes: [] },
           },
         ],
       });
