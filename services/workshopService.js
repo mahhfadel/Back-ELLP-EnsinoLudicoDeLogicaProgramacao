@@ -34,7 +34,7 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
     }
   };
 
-  exports.getStudentsForWorkshop = async (workshopId) => {
+  exports.getStudentsByWorkshop = async (workshopId) => {
     try {
       const workshop = await Workshop.findByPk(workshopId, {
         include: [
