@@ -1,4 +1,4 @@
-const { Workshop } = require('../models');
+const { Workshop, Student } = require('../models');
 const { StudentsWorkshops } = require('../models');
 
 exports.getWorkshops = async () => {
@@ -36,18 +36,16 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
 
   exports.getStudentsByWorkshop = async (workshopId) => {
     try {
-        // Encontrar todos os estudantes associados ao workshop
         const students = await StudentsWorkshops.findAll({
             where: { workshopID: workshopId },
             include: [
                 {
-                    model: Student, // Supondo que a tabela de estudantes se chama 'Student'
-                    attributes: ['id', 'name', 'email'], // Adicione os campos desejados dos estudantes
+                    model: Student, 
+                    attributes: ['id', 'name', 'email', 'isCompleted'], 
                 },
             ],
         });
 
-        // Extrair os dados dos estudantes do resultado
         const studentList = students.map(studentWorkshop => studentWorkshop.Student);
         
         return studentList;
@@ -68,7 +66,7 @@ exports.markStudentAsCompleted = async (workshopId, studentId) => {
       if (!studentWorkshop) {
           throw new Error('Student not found in this workshop');
       }
-      studentWorkshop.isCompleted = true;
+      studentWorkshop.isCompleted = !studentWorkshop.isCompleted;
       await studentWorkshop.save();
 
       return studentWorkshop;

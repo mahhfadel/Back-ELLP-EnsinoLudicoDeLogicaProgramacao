@@ -81,9 +81,9 @@ exports.addStudentsToWorkshop = async (req, res) => {
             return res.status(404).json({ message: "No students found for this workshop." });
         }
 
-        return res.status(200).json(students);  // Retorna os estudantes encontrados
+        return res.status(200).json(students); 
     } catch (error) {
-        return res.status(500).json({ message: error.message });  // Retorna erro em caso de falha
+        return res.status(500).json({ message: error.message });
     }
 };
 
