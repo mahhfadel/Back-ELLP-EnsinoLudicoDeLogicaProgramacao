@@ -58,15 +58,20 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
   
   exports.markStudentAsCompleted = async (workshopId, studentId) => {
     try {
-      const studentWorkshop = await StudentsWorkshops.findByPk([workshopId, studentId]);
-
-      console.log(studentWorkshop)
+      const studentWorkshop = await StudentsWorkshops.findOne({
+        where: {
+          workshopID: workshopId,
+          studentID: studentId,
+        },
+      });
+  
+      console.log(studentWorkshop);
   
       if (!studentWorkshop) {
         throw new Error('Student not found in this workshop');
       }
   
-      const newStatus = studentWorkshop.isCompleted ? false : true;
+      const newStatus = !studentWorkshop.isCompleted;
   
       await studentWorkshop.update({ isCompleted: newStatus });
   

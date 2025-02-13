@@ -2,14 +2,10 @@ module.exports = (sequelize, DataTypes) => {
   const StudentsWorkshops = sequelize.define(
     'StudentsWorkshops',
     {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
       studentID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true, // Define como parte da chave primária
         references: {
           model: 'students',
           key: 'id',
@@ -20,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       workshopID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true, // Define como parte da chave primária
         references: {
           model: 'workshops',
           key: 'id',
