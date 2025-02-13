@@ -40,7 +40,7 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
         include: [
           {
             model: Student,
-            through: { attributes: [] },
+            through: { attributes: ['isCompleted'] },
           },
         ],
       });
@@ -56,23 +56,25 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
   };
   
   
-exports.markStudentAsCompleted = async (workshopId, studentId) => {
-  try {
+  exports.markStudentAsCompleted = async (workshopId, studentId) => {
+    try {
       const studentWorkshop = await StudentsWorkshops.findOne({
-          where: {
-              workshopID: workshopId,
-              studentID: studentId
-          }
+        where: {
+          workshopID: workshopId,
+          studentID: studentId
+        }
       });
-
+  
       if (!studentWorkshop) {
-          throw new Error('Student not found in this workshop');
+        throw new Error('Student not found in this workshop');
       }
-      studentWorkshop.isCompleted = !studentWorkshop.isCompleted;
-      await studentWorkshop.save();
-
+  
+      const newStatus = studentWorkshop.isCompleted ? false : true;
+  
+      await studentWorkshop.update({ isCompleted: newStatus });
+  
       return studentWorkshop;
-  } catch (error) {
+    } catch (error) {
       throw new Error(`Error marking student as completed: ${error.message}`);
-  }
-};
+    }
+  };
