@@ -5,10 +5,7 @@ const { authRoutes, studentRoutes, workshopRoutes } = require('./routes');
 
 const cors = require('cors');
 
-app.use(cors({
-    origin: 'https://ellp-ten.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}));
+app.use(cors());
 
 
 sequelize.sync({ alter: true })
