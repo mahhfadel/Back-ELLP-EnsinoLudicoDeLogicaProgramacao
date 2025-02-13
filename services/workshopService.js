@@ -58,12 +58,7 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
   
   exports.markStudentAsCompleted = async (workshopId, studentId) => {
     try {
-      const studentWorkshop = await StudentsWorkshops.findOne({
-        where: {
-          workshopID: workshopId,
-          studentID: studentId
-        }
-      });
+      const studentWorkshop = await StudentsWorkshops.findByPk([workshopId, studentId]);
 
       console.log(studentWorkshop)
   
