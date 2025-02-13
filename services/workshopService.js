@@ -34,25 +34,27 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
     }
   };
 
-  exports.getStudentsByWorkshop = async (workshopId) => {
+  exports.getStudentsForWorkshop = async (workshopId) => {
     try {
-        const students = await StudentsWorkshops.findAll({
-            where: { workshopID: workshopId },
-            include: [
-                {
-                    model: Student, 
-                    attributes: ['id', 'name', 'email', 'isCompleted'], 
-                },
-            ],
-        });
-
-        const studentList = students.map(studentWorkshop => studentWorkshop.Student);
-        
-        return studentList;
+      const workshop = await Workshop.findByPk(workshopId, {
+        include: [
+          {
+            model: Student,
+            through: { attributes: ['id', 'name', 'email', 'phone', 'isCompleted'] },
+          },
+        ],
+      });
+  
+      if (!workshop) {
+        throw new Error('Workshop not found!');
+      }
+  
+      return workshop.Students;
     } catch (error) {
-        throw new Error(`Error fetching students for workshop: ${error.message}`);
+      throw new Error(`Error fetching students for workshop: ${error.message}`);
     }
-};
+  };
+  
   
 exports.markStudentAsCompleted = async (workshopId, studentId) => {
   try {
