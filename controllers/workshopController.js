@@ -70,3 +70,19 @@ exports.addStudentsToWorkshop = async (req, res) => {
     }
   };
   
+
+  exports.getStudentsForWorkshop = async (req, res) => {
+    const { id } = req.params; // Recebe o ID do workshop da URL
+
+    try {
+        const students = await workshopService.getStudentsByWorkshop(id);
+        
+        if (students.length === 0) {
+            return res.status(404).json({ message: "No students found for this workshop." });
+        }
+
+        return res.status(200).json(students);  // Retorna os estudantes encontrados
+    } catch (error) {
+        return res.status(500).json({ message: error.message });  // Retorna erro em caso de falha
+    }
+};

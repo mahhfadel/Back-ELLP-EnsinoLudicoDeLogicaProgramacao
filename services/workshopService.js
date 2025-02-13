@@ -33,4 +33,26 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
       throw new Error(`Error adding students to workshop: ${error.message}`);
     }
   };
+
+  exports.getStudentsByWorkshop = async (workshopId) => {
+    try {
+        // Encontrar todos os estudantes associados ao workshop
+        const students = await StudentsWorkshops.findAll({
+            where: { workshopID: workshopId },
+            include: [
+                {
+                    model: Student, // Supondo que a tabela de estudantes se chama 'Student'
+                    attributes: ['id', 'name', 'email'], // Adicione os campos desejados dos estudantes
+                },
+            ],
+        });
+
+        // Extrair os dados dos estudantes do resultado
+        const studentList = students.map(studentWorkshop => studentWorkshop.Student);
+        
+        return studentList;
+    } catch (error) {
+        throw new Error(`Error fetching students for workshop: ${error.message}`);
+    }
+};
   
