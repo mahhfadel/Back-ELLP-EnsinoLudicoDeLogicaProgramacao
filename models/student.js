@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
         phone: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                is: /^[0-9]+$/ // Somente números no telefone
-            }
         },
         birthdate: {
             type: DataTypes.DATEONLY,
