@@ -64,6 +64,8 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
           studentID: studentId
         }
       });
+
+      console.log(studentWorkshop)
   
       if (!studentWorkshop) {
         throw new Error('Student not found in this workshop');
