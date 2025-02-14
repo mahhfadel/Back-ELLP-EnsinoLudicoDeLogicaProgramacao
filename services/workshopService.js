@@ -62,7 +62,7 @@ exports.addStudentsToWorkshop = async (workshopId, studentIds) => {
         where: {
           workshopID: workshopId,
           studentID: studentId,
-        },
+        }
       });
   
       console.log(studentWorkshop);

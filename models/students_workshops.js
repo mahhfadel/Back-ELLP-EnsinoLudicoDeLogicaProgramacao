@@ -1,5 +1,3 @@
-const { Workshop, Student } = require(".");
-
 module.exports = (sequelize, DataTypes) => {
   const StudentsWorkshops = sequelize.define(
     'StudentsWorkshops',
@@ -9,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true, // Define como parte da chave primária
         references: {
-          model: Student,
+          model: 'students',
           key: 'id',
         },
         onDelete: 'CASCADE',
@@ -20,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true, // Define como parte da chave primária
         references: {
-          model: Workshop,
+          model: 'workshops',
           key: 'id',
         },
         onDelete: 'CASCADE',

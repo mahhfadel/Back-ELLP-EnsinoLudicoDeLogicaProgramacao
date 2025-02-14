@@ -81,28 +81,23 @@ exports.addStudentsToWorkshop = async (req, res) => {
             return res.status(404).json({ message: "No students found for this workshop." });
         }
 
-        return res.status(200).json(students); 
+        return res.status(200).json(students);  
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message }); 
     }
 };
 
 exports.markStudentAsCompleted = async (req, res) => {
   const { workshopId, studentId } = req.params; 
   try {
-      // Encontra a relação entre o aluno e o workshop
-      const studentWorkshop = await StudentsWorkshops.findOne({
-          where: { workshopID: workshopId, studentID: studentId }
-      });
+      const student = await workshopService.markStudentAsCompleted(workshopId, studentId);
 
-      if (!studentWorkshop) {
-          return res.status(404).json({ message: "Student not enrolled in this workshop." });
+      if(!student.isCompleted){
+        return res.status(200).json({ message: "Student marked as incompleted.", data: student });
+
       }
+      return res.status(200).json({ message: "Student marked as completed.", data: student });
 
-      studentWorkshop.isCompleted = true;  
-      await studentWorkshop.save(); 
-
-      return res.status(200).json({ message: "Student marked as completed." });
   } catch (error) {
       return res.status(500).json({ message: `Error marking student as completed: ${error.message}` });
   }
