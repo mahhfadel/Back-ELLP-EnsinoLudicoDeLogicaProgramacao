@@ -4,10 +4,6 @@ exports.getStudents = async (req, res) => {
     try{
         const students = await studentService.getStudents();
 
-        if(!students || students.length === 0){
-            return res.status(404).json({ message: 'Nenhum estudante encontrado.'});
-        }
-
         return res.status(200).json({
             message: 'Oficinas encontradas com sucesso.',
             data: students

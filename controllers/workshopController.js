@@ -4,10 +4,6 @@ exports.getWorkshops = async (req, res) => {
     try{
         const workshops = await workshopService.getWorkshops();
 
-        if(!workshops || workshops.length === 0){
-            return res.status(404).json({ message: 'Nenhuma oficina encontrado.'});
-        }
-
         return res.status(200).json({
             message: 'Oficinas encontradas com sucesso.',
             data: workshops
@@ -76,10 +72,6 @@ exports.addStudentsToWorkshop = async (req, res) => {
 
     try {
         const students = await workshopService.getStudentsByWorkshop(id);
-        
-        if (students.length === 0) {
-            return res.status(404).json({ message: "No students found for this workshop." });
-        }
 
         return res.status(200).json(students);  
     } catch (error) {
